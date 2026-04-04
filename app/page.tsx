@@ -1,9 +1,15 @@
-
+"use client"
+import { addToast } from '@/shared/lib/toast';
+import { Button } from '@/shared/ui/actions';
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      
-    </div>
+    <Button
+      onClick={() =>
+        addToast({ message: new Date().toISOString(), color: 'info' })
+      }
+    >
+      Добавить тост
+    </Button>
   );
 }
