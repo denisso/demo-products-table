@@ -1,4 +1,4 @@
-'use client'; 
+'use client';
 import { useToastStore } from '@/shared/lib/toast';
 import { Toast } from './toast';
 

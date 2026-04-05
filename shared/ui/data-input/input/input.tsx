@@ -46,7 +46,7 @@ const Input = forwardRef<
           className={clsx('grow ', className)}
           placeholder={placeholder}
           ref={ref}
-          autoComplete={autoComplete ? "on" : "off"}
+          autoComplete={autoComplete ? 'on' : 'off'}
           {...rest}
         />
         {rightIcon}

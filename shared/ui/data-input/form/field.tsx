@@ -42,7 +42,7 @@ export function FormField<TFormData extends FieldValues>({
     : {};
 
   const { ref, onChange, onBlur } = register(name, validationRules);
-  const color = error ? 'error' : '' as Color;
+  const color = error ? 'error' : ('' as Color);
   return (
     <Box className='gap-2'>
       <label htmlFor={id}>{label}</label>

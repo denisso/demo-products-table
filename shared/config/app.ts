@@ -7,4 +7,3 @@ export const APP_CONFIG = {
   // время ожидания любого запроса данных с сервера в мс
   REQUEST_TIMEOUT: 10000,
 } as const;
-

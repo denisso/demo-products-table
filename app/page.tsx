@@ -1,4 +1,4 @@
-"use client"
+'use client';
 import { addToast } from '@/shared/lib/toast';
 import { Button } from '@/shared/ui/actions';
 
