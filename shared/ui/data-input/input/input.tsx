@@ -1,8 +1,10 @@
 'use client';
-import React, { forwardRef, InputHTMLAttributes } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import { type Color } from '../../../types/color';
-import Image from 'next/image';
+import { Icon } from '../../display';
+
+const DEFAULT_WIDTH = 24;
 
 // классы которые будут сгенерированы
 const colorMap: Record<Color, string> = {
@@ -20,9 +22,9 @@ type Props = {
   className?: string;
 };
 
-const Input = forwardRef<
+const Input = React.forwardRef<
   HTMLInputElement,
-  Props & InputHTMLAttributes<HTMLInputElement>
+  Props & React.ComponentProps<'input'>
 >(
   (
     {
@@ -40,10 +42,10 @@ const Input = forwardRef<
     const colorClass = colorMap[color] || colorMap.neutral;
     return (
       <div className={clsx('input w-full', colorClass)}>
-        {leftIcon}
+        <div className='w-6'>{leftIcon}</div>
         <input
           type={type}
-          className={clsx('grow ', className)}
+          className={clsx('grow', className)}
           placeholder={placeholder}
           ref={ref}
           autoComplete={autoComplete ? 'on' : 'off'}
@@ -57,18 +59,21 @@ const Input = forwardRef<
 
 Input.displayName = 'Input';
 
-type InputRef = Omit<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  'ref' | 'type'
->;
+type InputRef = Omit<React.ComponentProps<'input'>, 'ref' | 'type'>;
 
-export const SearchInput = forwardRef<
+export const SearchInput = React.forwardRef<
   HTMLInputElement,
   Pick<Props, 'color'> & InputRef
 >(({ color, placeholder, ...rest }, ref) => (
   <Input
     leftIcon={
-      <Image src='/icons/search.svg' alt='Поиск' width={24} height={24} />
+      <Icon
+        filename='search'
+        alt='Поиск'
+        width={DEFAULT_WIDTH}
+        height={'auto'}
+        className='opacity-30'
+      />
     }
     type={'search'}
     placeholder={placeholder || 'Найти'}
@@ -80,35 +85,44 @@ export const SearchInput = forwardRef<
 
 SearchInput.displayName = 'SearchInput';
 
-export const LoginInput = forwardRef<
+export const LoginInput = React.forwardRef<
   HTMLInputElement,
-  Pick<Props, 'color'> &
-    InputRef & {
-      setValue?: React.Dispatch<React.SetStateAction<string>>;
+  Pick<Props, 'color'> & InputRef
+>(({ color, placeholder, ...rest }, parentRef) => {
+  const inputRef = React.useRef<HTMLInputElement>(null);
+
+  React.useImperativeHandle(parentRef, () => inputRef.current!);
+
+  const handleClear = () => {
+    if (inputRef.current) {
+      inputRef.current.value = '';
+      inputRef.current.dispatchEvent(new Event('input', { bubbles: true }));
     }
->(({ setValue, color, placeholder, ...rest }, ref) => {
+  };
   return (
     <Input
       leftIcon={
-        <Image src='/icons/login.svg' alt='Логин' width={24} height={24} />
+        <Icon
+          filename='login'
+          alt='Логин'
+          width={DEFAULT_WIDTH}
+          height={'auto'}
+          className='opacity-30'
+        />
       }
       type='text'
       placeholder={placeholder || 'Логин'}
       color={color}
-      ref={ref}
+       ref={inputRef}
       {...rest}
       rightIcon={
-        <Image
-          src='/icons/clear.svg'
-          alt='Пароль'
-          width={24}
-          height={24}
-          className='cursor-pointer'
-          onClick={() => {
-            if (typeof setValue == 'function') {
-              setValue('');
-            }
-          }}
+        <Icon
+          filename='close'
+          alt='Очистка текста'
+          width={DEFAULT_WIDTH}
+          height={'auto'}
+          className='cursor-pointer opacity-30'
+          onClick={handleClear}
         />
       }
     />
@@ -117,7 +131,7 @@ export const LoginInput = forwardRef<
 
 LoginInput.displayName = 'LoginInput';
 
-export const PasswordInput = forwardRef<
+export const PasswordInput = React.forwardRef<
   HTMLInputElement,
   Pick<Props, 'color'> & InputRef
 >(({ color, placeholder, ...rest }, ref) => {
@@ -125,7 +139,13 @@ export const PasswordInput = forwardRef<
   return (
     <Input
       leftIcon={
-        <Image src='/icons/password.svg' alt='Пароль' width={24} height={24} />
+        <Icon
+          filename='password'
+          alt='Пароль'
+          width={DEFAULT_WIDTH}
+          height={'auto'}
+          className='opacity-30'
+        />
       }
       type={hide ? 'password' : 'text'}
       placeholder={placeholder || 'Пароль'}
@@ -133,12 +153,12 @@ export const PasswordInput = forwardRef<
       ref={ref}
       {...rest}
       rightIcon={
-        <Image
-          src='/icons/eye-off.svg'
+        <Icon
+          filename={hide ? 'eye-off' : 'eye'}
           alt='Пароль'
-          width={24}
-          height={24}
-          className='cursor-pointer'
+          width={DEFAULT_WIDTH}
+          height={'auto'}
+          className='cursor-pointer opacity-30'
           onClick={() => setHide((prev) => !prev)}
         />
       }
@@ -148,7 +168,7 @@ export const PasswordInput = forwardRef<
 
 PasswordInput.displayName = 'PasswordInput';
 
-export const TextInput = forwardRef<
+export const TextInput = React.forwardRef<
   HTMLInputElement,
   Pick<Props, 'color' | 'placeholder'> & InputRef
 >(({ color, placeholder, ...rest }, ref) => (

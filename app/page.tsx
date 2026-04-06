@@ -1,15 +1,12 @@
-'use client';
-import { addToast } from '@/shared/lib/toast';
-import { Button } from '@/shared/ui/actions';
+import { Container } from '@/shared/ui/display';
+import { ProductsTable } from '@/widgets/products-table';
+import { Logout } from '@/widgets/logout';
 
 export default function Home() {
   return (
-    <Button
-      onClick={() =>
-        addToast({ message: new Date().toISOString(), color: 'info' })
-      }
-    >
-      Добавить тост
-    </Button>
+    <Container className='w-150'>
+      <Logout />
+      <ProductsTable />
+    </Container>
   );
 }

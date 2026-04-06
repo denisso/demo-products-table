@@ -11,7 +11,7 @@ const colorMap: Record<Color, string> = {
 
 type Props = {
   color?: Color;
-} & React.InputHTMLAttributes<HTMLInputElement>;
+} & React.ComponentProps<'input'>;
 
 export function Checkbox({ className, color, ...rest }: Props) {
   const colorClass = color ? colorMap[color] : colorMap['neutral'];

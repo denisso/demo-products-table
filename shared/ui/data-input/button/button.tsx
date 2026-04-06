@@ -11,7 +11,7 @@ const colorMap: Record<Color, string> = {
 
 type Props = {
   color?: Color;
-} & React.ButtonHTMLAttributes<HTMLButtonElement>;
+} & React.ComponentProps<'button'>;
 
 export const Button = ({
   children,
@@ -24,7 +24,7 @@ export const Button = ({
   return (
     <button
       onClick={onClick}
-      className={clsx('btn', colorClass, className)}
+      className={clsx('btn w-full', colorClass, className)}
       {...rest}
     >
       {children}

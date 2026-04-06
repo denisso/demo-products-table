@@ -2,6 +2,7 @@
 import { type Color } from '../../../types/color';
 import clsx from 'clsx';
 import _Link from 'next/link';
+import './link.css';
 
 // классы которые будут сгенерированы
 const colorMap: Record<Color, string> = {

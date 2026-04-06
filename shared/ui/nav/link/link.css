@@ -1,0 +1,24 @@
+.link-primary:visited {
+  color: var(--color-primary);
+}
+.link-secondary:visited {
+  color: var(--color-secondary);
+}
+.link-accent:visited {
+  color: var(--color-accent);
+}
+.link-neutral:visited {
+  color: var(--color-neutral);
+}
+.link-info:visited {
+  color: var(--color-info);
+}
+.link-success:visited {
+  color: var(--color-success);
+}
+.link-warning:visited {
+  color: var(--color-warning);
+}
+.link-error:visited {
+  color: var(--color-error);
+}
